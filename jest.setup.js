@@ -1,5 +1,4 @@
-import global from 'globals'
-import { TextEncoder, TextDecoder } from 'util'
+const { TextEncoder, TextDecoder } = require('util')
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
