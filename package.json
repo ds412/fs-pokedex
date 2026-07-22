@@ -8,7 +8,9 @@
     "start-prod": "node app.js",
     "test": "jest",
     "eslint": "eslint './**/*.{js,jsx}'",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test:e2e": "playwright test",
+    "start-e2e-test": "webpack-dev-server --mode development --port 8080"
   },
   "repository": {
     "type": "git",
@@ -24,15 +26,22 @@
   },
   "homepage": "https://github.com/smartlyio/fullstackopen-cicd#readme",
   "dependencies": {
+    "@playwright/test": "^1.61.1",
     "axios": "^1.13.6",
     "express": "^5.2.1",
+    "playwright": "^1.61.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1"
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFiles": ["<rootDir>/jest.setup.js"]
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testPathIgnorePatterns": [
+      "e2e-tests"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
