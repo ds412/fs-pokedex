@@ -15,7 +15,7 @@ module.exports = [
   },
   js.configs.recommended,
   {
-    files: ['app.js', 'jest.setup.js'],
+    files: ['app.js', 'jest.setup.js', 'playwright.config.js', 'e2e-tests/**/*.js'],
     languageOptions: {
       ecmaVersion: 2018,
       sourceType: 'commonjs',
@@ -73,5 +73,5 @@ module.exports = [
       'no-console': 'error',
       'react/prop-types': 0
     }
-  }
+  },
 ]
