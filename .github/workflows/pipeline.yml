@@ -39,7 +39,7 @@ jobs:
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
       - name: Notify success on Discord
         if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip') }}
-        uses: sarisia/actions-status-discord@4f4322cb1878ec4400fcf6a10315d2169a90877d
+        uses: sarisia/actions-status-discord@v1.16.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: Success
@@ -51,7 +51,7 @@ jobs:
           color: 0x00ff00
       - name: Notify failure on Discord
         if: ${{ failure() }}
-        uses: sarisia/actions-status-discord@4f4322cb1878ec4400fcf6a10315d2169a90877d
+        uses: sarisia/actions-status-discord@v1.16.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: Failure
