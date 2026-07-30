@@ -37,6 +37,34 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip') }}
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
+      - name: Notify success on Discord
+        if: ${{ success() && github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip') }}
+        uses: sarisia/actions-status-discord@4f4322cb1878ec4400fcf6a10315d2169a90877d
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: Success
+          title: "A new version has been deployed to production."
+          description: |
+           Commit: [`${{ github.sha }}`](${{ github.event.head_commit.url }})
+           Message: ${{ github.event.head_commit.message }}
+           Author: ${{ github.actor }}
+          color: 0x00ff00
+      - name: Notify failure on Discord
+        if: ${{ failure() }}
+        uses: sarisia/actions-status-discord@4f4322cb1878ec4400fcf6a10315d2169a90877d
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: Failure
+          title: "The pipeline encountered an error."
+          description: |
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: [`${{ github.sha }}`](${{ github.event.head_commit.url || github.event.pull_request.html_url }})
+            Message: ${{ github.event.head_commit.message || github.event.pull_request.title }}
+            Author: ${{ github.actor }}
+            Workflow: ${{ github.workflow }}
+            Job: ${{ github.job }}
+          color: 0xff0000
 
   tag_release:
     needs: [simple_deployment_pipeline]
