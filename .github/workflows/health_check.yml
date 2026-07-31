@@ -3,8 +3,7 @@ name: Periodic health check
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
-
+    - cron: '0 6 * * 1'
 jobs:
   health_check:
     runs-on: ubuntu-latest
